@@ -1,122 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Gestion du Splash Screen (Écran de démarrage style Facebook)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false); // Arrête le chargement après 3 secondes
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Rendu de l'écran de chargement
+  if (isLoading) {
+    return (
+      <div className="container-fluid vh-100 d-flex flex-column justify-content-center align-items-center bg-white">
+        <div className="mb-4" style={{ maxWidth: '150px' }}>
+          {/* Recherche l'image logo.png placée dans le dossier public */}
+          <img 
+            src="./logo.png" 
+            alt="StudyLife Logo" 
+            className="img-fluid"
+            onError={(e) => {
+              // Si le logo personnalisé n'existe pas encore, affiche une icône par défaut
+              e.target.style.display = 'none';
+            }}
+          />
+        </div>
+        
+        {/* Spinner de chargement Bootstrap */}
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Chargement...</span>
+        </div>
+        
+        <p className="text-muted small mt-3 fw-light">StudyLife — Votre espace d'apprentissage</p>
+      </div>
+    );
+  }
+
+  // Rendu de l'application après chargement
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="container vh-100 d-flex justify-content-center align-items-center bg-light">
+      <div className="card p-5 shadow text-center" style={{ maxWidth: '400px', borderRadius: '15px' }}>
+        
+        <div className="text-success display-1 mb-3">
+          <FontAwesomeIcon icon="fa-solid fa-circle-check" />
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+        
+        <h2 className="fw-bold text-dark">Démarrage Réussi !</h2>
+        <p className="text-muted small">
+          Le Splash Screen a fonctionné. L'environnement est prêt pour le code.
+        </p>
+        
+        <button className="btn btn-primary w-100 py-2 mt-2 fw-semibold">
+          <FontAwesomeIcon icon="fa-solid fa-rocket" className="me-2" />
+          Étape suivante
         </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
