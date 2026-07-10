@@ -17,14 +17,15 @@ function App() {
   if (isLoading) {
     return (
       <div className="container-fluid vh-100 d-flex flex-column justify-content-center align-items-center bg-white">
-        <div className="mb-4" style={{ maxWidth: '150px' }}>
+        {/* MODIFICATION ICI : augmenté à 500px pour un logo très grand */}
+        <div className="mb-4 text-center" style={{ maxWidth: '500px', width: '100%' }}>
           {/* Recherche l'image logo.png placée dans le dossier public */}
           <img 
             src="./logo.png" 
             alt="StudyLife Logo" 
             className="img-fluid"
             onError={(e) => {
-              // Si le logo personnalisé n'existe pas encore, affiche une icône par défaut
+              // Si le logo personnalisé n'existe pas encore, cache la balise image
               e.target.style.display = 'none';
             }}
           />
